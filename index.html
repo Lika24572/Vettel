@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Себастьян Феттель - Легенда Формулы 1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #e10600;
+            --secondary: #1e1e1e;
+            --accent: #ff6b6b;
+            --text: #f0f0f0;
+            --dark: #0a0a0a;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        /* Навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(225, 6, 0, 0.2);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: rotate 10s linear infinite;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+            position: relative;
+        }
+        
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Главный контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Страницы */
+        .page {
+            min-height: 100vh;
+            padding-top: 80px;
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Главная страница */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(225, 6, 0, 0.1) 0%, rgba(10, 10, 10, 0.9) 70%);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--primary), #ffffff, var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInUp 1s ease, textShine 3s infinite;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.4s both;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .btn i {
+            margin-left: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #b80500;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(225, 6, 0, 0.3);
+        }
+        
+        .btn:hover i {
+            transform: translateX(5px);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 60%;
+            height: 80%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Sebastian_Vettel_2019_%28cropped%29.jpg/800px-Sebastian_Vettel_2019_%28cropped%29.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            animation: fadeInRight 1.5s ease, float 6s ease-in-out infinite;
+            filter: grayscale(0.2) contrast(1.1);
+            z-index: 1;
+        }
+        
+        /* Секции */
+        .section {
+            padding: 5rem 0;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            animation: expandWidth 2s ease;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-size: 1.1rem;
+            color: #aaa;
+        }
+        
+        /* Карьера */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary);
+            transform: translateX(-50%);
+            animation: drawLine 2s ease;
+        }
+        
+        .timeline-item {
+            margin-bottom: 3rem;
+            position: relative;
+            width: 50%;
+            padding: 0 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+        
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            background: rgba(30, 30, 30, 0.8);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+            border-left: 3px solid var(--primary);
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .timeline-content::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 15px;
+            height: 15px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content::after {
+            right: -7.5px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::after {
+            left: -7.5px;
+        }
+        
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-year i {
+            margin-right: 8px;
+        }
+        
+        .timeline-content h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .timeline-content p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Достижения */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .achievement-card {
+            background: rgba(30, 30, 30, 0.8);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .achievement-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            animation: bounce 2s infinite;
+        }
+        
+        .achievement-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(225, 6, 0, 0.5);
+        }
+        
+        .achievement-card h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .stats-section {
+            margin-top: 4rem;
+            background: rgba(30, 30, 30, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Наследие */
+        .legacy-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .legacy-text {
+            background: rgba(30, 30, 30, 0.5);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.5s ease;
+        }
+        
+        .legacy-text.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .legacy-text:nth-child(even) {
+            transform: translateX(30px);
+            border-left: none;
+            border-right: 4px solid var(--accent);
+        }
+        
+        .legacy-text:nth-child(even).visible {
+            transform: translateX(0);
+        }
+        
+        .quote {
+            font-style: italic;
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(225, 6, 0, 0.1);
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary);
+            position: absolute;
+        }
+        
+        .quote::before {
+            top: 10px;
+            left: 20px;
+        }
+        
+        .quote::after {
+            bottom: 10px;
+            right: 20px;
+        }
+        
+        /* Футер */
+        footer {
+            background: #111;
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(225, 6, 0, 0.2);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-link {
+            margin: 0 1rem;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        .footer-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+            background: rgba(225, 6, 0, 0.1);
+        }
+        
+        .footer-link i {
+            margin-right: 8px;
+        }
+        
+        .copyright {
+            margin-top: 1rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px) translateY(-50%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) translateY(-50%);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes textShine {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(-50%) translateX(0);
+            }
+            50% {
+                transform: translateY(-53%) translateX(5px);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(225, 6, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(225, 6, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(225, 6, 0, 0);
+            }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes expandWidth {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100px;
+            }
+        }
+        
+        @keyframes drawLine {
+            from {
+                height: 0;
+            }
+            to {
+                height: 100%;
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-image {
+                width: 50%;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-content::after {
+                left: -7.5px !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            .hero-image {
+                position: relative;
+                width: 100%;
+                height: 300px;
+                margin-top: 2rem;
+                transform: none;
+                top: 0;
+                animation: fadeInUp 1.5s ease, float 6s ease-in-out infinite;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-link {
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo"><i class="fas fa-flag-checkered"></i> Vettel</div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link" data-page="home">Главная</a></li>
+                <li><a href="#" class="nav-link" data-page="career">Карьера</a></li>
+                <li><a href="#" class="nav-link" data-page="achievements">Достижения</a></li>
+                <li><a href="#" class="nav-link" data-page="legacy">Наследие</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Главная страница -->
+    <section id="home" class="page active">
+        <div class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Себастьян Феттель</h1>
+                    <p>Четырёхкратный чемпион мира Формулы-1, один из самых успешных гонщиков в истории автоспорта. Немецкий пилот, известный своим талантом, преданностью и яркой карьерой в командах Red Bull, Ferrari и Aston Martin.</p>
+                    <p>Феттель вошёл в историю как один из самых молодых чемпионов мира в истории Формулы-1, завоевав свой первый титул в возрасте 23 лет. Его стиль вождения, техническое понимание и способность адаптироваться к различным условиям сделали его одним из величайших гонщиков своего поколения.</p>
+                    <p>В 2025 году, спустя несколько лет после завершения карьеры, Феттель продолжает оставаться влиятельной фигурой в автоспорте, занимаясь развитием молодых талантов и продвигая экологические инициативы в motorsport.</p>
+                    <a href="#" class="btn nav-link" data-page="career">Узнать больше <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            <div class="hero-image"></div>
+        </div>
+    </section>
+
+    <!-- Карьера -->
+    <section id="career" class="page">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">Карьера</h2>
+                <p class="section-subtitle">Путь Себастьяна Феттеля в Формуле-1 - это история невероятного успеха, настойчивости и постоянного стремления к совершенству. От скромного начала до вершин чемпионства - каждая веха его карьеры заслуживает отдельного внимания.</p>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2007-2008</div>
+                            <h3>Ранние годы и дебют в Формуле-1</h3>
+                            <p>Дебютировал в Формуле-1 за команду BMW Sauber на Гран-при США, став самым молодым гонщиком, набравшим очки в чемпионате. Всего через несколько месяцев он присоединился к команде Toro Rosso, где продолжил демонстрировать свой талант.</p>
+                            <p>Уже в своем первом полном сезоне в 2008 году Феттель одержал сенсационную победу на Гран-при Италии, став самым молодым гонщиком, выигравшим Гран-при в истории Формулы-1 в возрасте 21 года и 73 дней. Эта победа привлекла внимание ведущих команд чемпионата и предопределила его переход в Red Bull Racing.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2009-2014</div>
+                            <h3>Red Bull Racing - Эра доминирования</h3>
+                            <p>Присоединился к Red Bull Racing в 2009 году, где быстро стал лидером команды. В период с 2010 по 2013 год выиграл четыре чемпионских титула подряд, установив множество рекордов, включая наибольшее количество побед в сезоне (13 в 2013 году).</p>
+                            <p>В эти годы Феттель и Red Bull создали одну из самых доминирующих пар в истории спорта. Его способность к квалификациям, управление гонками и скорость в дождевых условиях стали легендарными. Команда выиграла четыре двойных чемпионства подряд, что является одним из самых впечатляющих достижений в истории Формулы-1.</p>
+                            <p>Особого внимания заслуживает сезон 2013 года, когда Феттель выиграл последние 9 гонок сезона, установив абсолютный рекорд по количеству побед подряд. Этот период стал апогеем его карьеры в Red Bull.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2015-2020</div>
+                            <h3>Scuderia Ferrari - Мечта сбылась</h3>
+                            <p>Перешёл в Ferrari в 2015 году, осуществив свою детскую мечту. За шесть сезонов в итальянской команде одержал 14 побед и стал вице-чемпионом мира в 2017 и 2018 годах, ведя ожесточенную борьбу с Льюисом Хэмилтоном.</p>
+                            <p>Годы в Ferrari были отмечены как большими успехами, так и разочарованиями. Феттель стал любимцем тифози, но чемпионский титул так и остался недостижимой целью. Тем не менее, его победы за рулем Ferrari, особенно на легендарных трассах вроде Монцы и Спа, навсегда вписали его имя в историю команды.</p>
+                            <p>Период в Ferrari также показал Феттеля как зрелого гонщика, способного работать в высоконапряженной среде и быть лицом одной из самых известных спортивных команд в мире.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2021-2022</div>
+                            <h3>Aston Martin - Завершение карьеры</h3>
+                            <p>Завершил карьеру в команде Aston Martin, продолжая демонстрировать высокий уровень мастерства и становясь голосом прогрессивных идей в автоспорте. Его последние сезоны были отмечены активной позицией по экологическим и социальным вопросам.</p>
+                            <p>В Aston Martin Феттель взял на себя роль наставника для молодых гонщиков и продолжал демонстрировать свое мастерство, несмотря на менее конкурентный автомобиль. Его последняя гонка в Абу-Даби в 2022 году стала эмоциональным финалом выдающейся карьеры, собрав tributes от коллег, команд и болельщиков по всему миру.</p>
+                            <p>В 2025 году Феттель периодически появляется в гонках на выносливость и продолжает участвовать в развитии автоспорта через различные инициативы, включая программу поддержки молодых талантов.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Достижения -->
+    <section id="achievements" class="page">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">Достижения</h2>
+                <p class="section-subtitle">За свою карьеру Себастьян Феттель установил множество рекордов и достиг вершин, о которых большинство гонщиков могут только мечтать. Его статистика говорит сама за себя.</p>
+                
+                <div class="achievements-grid">
+                    <div class="achievement-card">
+                        <div class="achievement-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="achievement-number">4</div>
+                        <h3>Чемпионских титула</h3>
+                        <p>Подряд с 2010 по 2013 год. Третий результат в истории после Шумахера и Хэмилтона.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon"><i class="fas fa-flag-checkered"></i></div>
+                        <div class="achievement-number">53</div>
+                        <h3>Победы в Гран-при</h3>
+                        <p>Третий результат в истории после Хэмилтона и Шумахера. Первая победа в 21 год.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon"><i class="fas fa-stopwatch"></i></div>
+                        <div class="achievement-number">57</div>
+                        <h3>Поулы</h3>
+                        <p>Четвёртый результат в истории. Девять поулов подряд в 2011 году.</p>
+                    </div>
+                    <div class="achievement-card">
+                        <div class="achievement-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="achievement-number">38</div>
+                        <h3>Быстрых круга</h3>
+                        <p>Шестой результат в истории. Демонстрация постоянной скорости.</p>
+                    </div>
+                </div>
+                
+                <div class="stats-section">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent);">Другие ключевые статистические данные (обновлено на 2025 год)</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">122</div>
+                            <div class="stat-label">Подиума</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">3098</div>
+                            <div class="stat-label">Очков в карьере</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">299</div>
+                            <div class="stat-label">Стартов в Гран-при</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">9</div>
+                            <div class="stat-label">Хет-триков</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">4</div>
+                            <div class="stat-label">Гран-слема</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Сезонов в Ф1</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 3rem; text-align: center;">
+                    <p>Феттель установил рекорд по наибольшему количеству побед в одном сезоне (13 в 2013 году), который был побит только в 2016 году. Он стал вторым самым молодым чемпионом мира в истории Формулы-1, завоевав титул в 23 года и 134 дня. Этот рекорд был побит Максом Ферстаппеном в 2021 году.</p>
+                    <p>В 2025 году Феттель продолжает удерживать несколько возрастных рекордов Формулы-1, включая самого молодого гонщика, лидировавшего в Гран-при (21 год) и самого молодого обладателя поула (21 год).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Наследие -->
+    <section id="legacy" class="page">
+        <div class="container">
+            <div class="section">
+                <h2 class="section-title">Наследие</h2>
+                <p class="section-subtitle">Влияние Себастьяна Феттеля на Формулу-1 выходит далеко за рамки его гоночных достижений. Его личность, принципы и взгляды на спорт оставили неизгладимый след.</p>
+                
+                <div class="legacy-content">
+                    <div class="legacy-text">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Вклад в развитие спорта</h3>
+                        <p>Феттель всегда был больше, чем просто гонщиком. Его техническое понимание автомобиля и способность давать обратную связь инженерам помогли развить несколько поколений болидов Формулы-1. Многие решения, которые он предлагал, впоследствии стали стандартом в чемпионате.</p>
+                        <p>Его работа с молодыми гонщиками, особенно в последние годы карьеры, демонстрирует его приверженность развитию спорта. Феттель всегда находил время для общения с фанатами и молодыми талантами, делясь своим опытом и знаниями.</p>
+                        <p>В 2025 году Феттель продолжает влиять на автоспорт через свою академию для молодых гонщиков, где он лично участвует в подготовке следующего поколения чемпионов. Его подход сочетает техническое мастерство с психологической подготовкой, что делает его программу уникальной в мире motorsport.</p>
+                    </div>
+                    
+                    <div class="legacy-text">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Социальная и экологическая активность</h3>
+                        <p>В последние годы карьеры Феттель стал голосом прогрессивных изменений в автоспорте. Он активно выступал за экологическую устойчивость, разнообразие и инклюзивность в Формуле-1. Его шлемы с социальными посланиями и участие в экологических акциях привлекли внимание к важным проблемам.</p>
+                        <p>Феттель использовал свою платформу для поддержки LGBTQ+ сообщества, расового равенства и защиты окружающей среды. Он доказал, что спортсмены могут и должны использовать свое влияние для позитивных изменений в обществе.</p>
+                        <p>В 2025 году Феттель возглавляет несколько экологических инициатив в автоспорте, включая программу по углеродной нейтральности и развитие устойчивого топлива. Его работа в этой области получила признание не только в мире спорта, но и среди экологических организаций.</p>
+                    </div>
+                    
+                    <div class="quote">
+                        "Когда вы выходите на трассу, все равны. Неважно, кто вы, откуда вы или во что верите. Важны только ваши навыки, решимость и страсть к гонкам."
+                    </div>
+                    
+                    <div class="legacy-text">
+                        <h3 style="color: var(--accent); margin-bottom: 1rem;">Наследие для будущих поколений</h3>
+                        <p>Феттель оставил после себя не только рекорды и трофеи, но и новый стандарт того, каким может быть гонщик Формулы-1. Его многогранная личность, интеллект и принципиальная позиция по важным вопросам вдохновили многих молодых спортсменов.</p>
+                        <p>Его карьера демонстрирует, что успех в спорте может сочетаться с социальной ответственностью и активной гражданской позицией. Феттель показал, что чемпион - это не только тот, кто выигрывает гонки, но и тот, кто использует свою платформу для позитивного влияния на мир.</p>
+                        <p>В 2025 году наследие Феттеля продолжает расти. Его имя упоминается в контексте будущего автоспорта, где экологичность и социальная ответственность становятся неотъемлемой частью соревнований. Многие молодые гонщики cite Феттеля как образец для подражания не только в гоночном мастерстве, но и в подходе к жизни вне трассы.</p>
+                    </div>
+                    
+                    <div class="quote">
+                        "Настоящий успех приходит, когда ты не только достигаешь своих целей, но и помогаешь другим найти их путь."
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://t.me/likallk" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a>
+                <a href="https://vk.com/likallk" class="footer-link"><i class="fab fa-vk"></i> VK</a>
+                <a href="mailto:likaorenburg@gmail.com" class="footer-link"><i class="fas fa-envelope"></i> Email</a>
+            </div>
+            <p class="copyright">© 2025 Себастьян Феттель. Все права защищены. Сайт создан фанатом.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Навигация между страницами
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Скрыть все страницы
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Показать выбранную страницу
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+                
+                // Прокрутка к верху страницы
+                window.scrollTo(0, 0);
+                
+                // Запуск анимаций для новой страницы
+                setTimeout(animateOnScroll, 100);
+            });
+        });
+        
+        // Анимация появления элементов при прокрутке
+        const animateOnScroll = () => {
+            const fadeElements = document.querySelectorAll('.timeline-item, .achievement-card, .legacy-text');
+            
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            animateOnScroll();
+        });
+        
+        // Изменение навигации при прокрутке
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.padding = '0.5rem 0';
+                nav.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                nav.style.padding = '1rem 0';
+                nav.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
